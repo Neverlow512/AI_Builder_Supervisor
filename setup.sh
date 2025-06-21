@@ -1,8 +1,9 @@
 #!/bin/bash
 
 # This script sets up the initial file structure and boilerplate for the Director AI Chrome Extension.
+# It includes downloading real, royalty-free icons for the project.
 
-echo "--- Starting Director AI Extension Setup ---"
+echo "--- Starting Director AI Extension Setup (v2) ---"
 
 # 1. Create the main project directory
 echo "Step 1: Creating project directory 'director-ai-extension'..."
@@ -226,11 +227,12 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 EOF
 echo "Done."
 
-# 7. Download icons
-echo "Step 7: Downloading icons..."
-wget -O icons/icon16.png https://icon-icons.com/icons2/2248/PNG/16/brain_icon_136894.png &> /dev/null
-wget -O icons/icon48.png https://icon-icons.com/icons2/2248/PNG/48/brain_icon_136894.png &> /dev/null
-wget -O icons/icon128.png https://icon-icons.com/icons2/2248/PNG/128/brain_icon_136894.png &> /dev/null
+# 7. Download real, working icons
+echo "Step 7: Downloading icons from a reliable source (icons8.com)..."
+# Using curl with -L to follow redirects and -s for silent mode
+curl -sL "https://img.icons8.com/plasticine/128/brain.png" -o "icons/icon128.png"
+curl -sL "https://img.icons8.com/plasticine/48/brain.png" -o "icons/icon48.png"
+curl -sL "https://img.icons8.com/plasticine/16/brain.png" -o "icons/icon16.png"
 echo "Done."
 
 echo ""
@@ -242,4 +244,3 @@ echo "1. Open Google Chrome and navigate to 'chrome://extensions'."
 echo "2. Enable 'Developer mode' in the top right corner."
 echo "3. Click 'Load unpacked' and select the 'director-ai-extension' directory."
 echo "4. The Director AI icon should now appear in your extensions bar!"
-
