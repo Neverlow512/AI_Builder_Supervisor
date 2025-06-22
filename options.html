@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Director AI Settings</title>
+    <link rel="stylesheet" href="popup.css"> <!-- We can reuse the same styles! -->
+    <style>
+        body { padding: 20px; height: auto; }
+        h1 { margin-top: 0; }
+        .settings-container { display: flex; flex-direction: column; gap: 15px; }
+        .input-group { display: flex; flex-direction: column; gap: 5px; }
+        label { font-weight: bold; font-size: 14px; }
+        input { width: 100%; box-sizing: border-box; padding: 8px; font-size: 16px; }
+        #status { margin-top: 10px; font-weight: bold; color: #4a90e2; min-height: 20px;}
+    </style>
+</head>
+<body>
+    <div class="settings-container">
+        <h1>Settings</h1>
+        <div class="input-group">
+            <label for="api-key-input">Gemini API Key</label>
+            <input type="password" id="api-key-input" placeholder="Enter your API key here">
+        </div>
+        <button id="save-button">Save</button>
+        <div id="status"></div>
+    </div>
+    <script src="options.js"></script>
+</body>
+</html>

@@ -18,27 +18,28 @@ document.addEventListener('DOMContentLoaded', () => {
         const messageText = promptInput.value.trim();
         if (messageText === '') return;
 
-        // Display user message
-        const userMessage = document.createElement('div');
-        userMessage.className = 'message user';
-        userMessage.textContent = messageText;
-        messageArea.appendChild(userMessage);
-
-        // Clear input and scroll to bottom
+        // Display user message in the UI
+        displayMessage(messageText, 'user');
         promptInput.value = '';
+
+        // *** NEW: Send message to the background script (the "brain") ***
+        chrome.runtime.sendMessage({ type: 'DIRECTOR_AI_QUERY', content: messageText }, (response) => {
+            if (chrome.runtime.lastError) {
+                // Handle errors, e.g., if the background script is not available
+                console.error(chrome.runtime.lastError);
+                displayMessage('Error: Could not connect to the service worker.', 'assistant');
+                return;
+            }
+            // Display the response from the background script
+            displayMessage(response.content, 'assistant');
+        });
+    }
+
+    function displayMessage(text, sender) {
+        const messageElement = document.createElement('div');
+        messageElement.className = `message ${sender}`;
+        messageElement.textContent = text;
+        messageArea.appendChild(messageElement);
         messageArea.scrollTop = messageArea.scrollHeight;
-
-        // In Phase 1, we just log it. In Phase 2, this will send to the background script.
-        console.log('Message to send to Director AI:', messageText);
-
-        // Placeholder for assistant response
-        // In Phase 2, the actual response from the AI will be displayed here.
-        setTimeout(() => {
-            const assistantMessage = document.createElement('div');
-            assistantMessage.className = 'message assistant';
-            assistantMessage.textContent = "Received. (Phase 1 Stub)";
-            messageArea.appendChild(assistantMessage);
-            messageArea.scrollTop = messageArea.scrollHeight;
-        }, 500);
     }
 });
